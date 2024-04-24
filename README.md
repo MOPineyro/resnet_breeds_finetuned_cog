@@ -48,10 +48,6 @@ The image preprocessing steps include resizing the image to a fixed dimension (2
 
 The model includes error handling for scenarios where the image URL might be incorrect or the image cannot be retrieved. It logs appropriate error messages to assist in debugging.
 
-## Contributions
-
-Contributions to this project are welcome. You can contribute by improving the model's accuracy, extending the number of classes, or enhancing the preprocessing steps.
-
 ## Learning More
 
 For more information on how to use Cog to containerize and deploy machine learning models, check the [Cog documentation on GitHub](https://github.com/replicate/cog).
