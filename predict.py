@@ -1,5 +1,5 @@
 from typing import Any
-from cog import BasePredictor, Input, Path
+from cog import BasePredictor, Input, BaseModel
 import torch
 from torchvision import datasets, transforms
 from torchvision.models import resnet18, ResNet
@@ -8,7 +8,8 @@ import numpy as np
 import requests, io, logging, json
 import torch.nn as nn
 
-
+class Output(BaseModel):
+    breed: str
 
 class Predictor(BasePredictor):
     def setup(self):
@@ -36,7 +37,7 @@ class Predictor(BasePredictor):
 
         return model
 
-    def predict(self, image: str = Input(description="URL of image to classify")) -> Any:
+    def predict(self, image: str = Input(description="URL of image to classify")) -> Output:
         """Run a single prediction on the model"""
         # Preprocess the image
         image = self.image_get(image)
@@ -52,7 +53,9 @@ class Predictor(BasePredictor):
         _, pred = torch.max(output, 1)
         
         # Return the breed name
-        return self.class_names[pred.item()]
+        breed = self.class_names[pred.item()]
+        
+        return Output(breed=breed)
 
 
     def image_get(self, image_url: str) -> Image:

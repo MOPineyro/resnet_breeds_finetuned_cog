@@ -4,3 +4,4 @@ build:
     - torch==2.1.2
     - torchvision
 predict: "predict.py:Predictor"
+image: "r8.im/mopineyro/resnet_breeds_finetuned"
