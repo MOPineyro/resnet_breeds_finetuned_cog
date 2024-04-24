@@ -36,16 +36,22 @@ class Predictor(BasePredictor):
         model.eval()
 
         return model
-
-    def predict(self, image: str = Input(description="URL of image to classify")) -> Output:
-        """Run a single prediction on the model"""
-        # Preprocess the image
-        image = self.image_get(image)
+    
+    def predict(self, image_file: Image = Input(type=Image, help="Upload an image file.", default=None),
+                      image_url: str = Input(description="Enter an image URL.", default=None)) -> Output:
+        """Run prediction on an image provided either as a file upload or via a URL."""
+        if image_file is not None:
+            image = image_file
+        elif image_url is not None:
+            image = self.image_get(image_url)
+        else:
+            raise ValueError("No image provided. Please upload an image file or enter an image URL.")
+        
         if image is None:
-            logging.error(f"Could not retrieve image from {image}")
-            return None
+            raise ValueError("Image URL error.")
+        
         image = self.image_transform(image)
-
+        
         # Run the prediction
         output = self.model(image)
         
