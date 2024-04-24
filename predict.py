@@ -1,5 +1,5 @@
 from typing import Any
-from cog import BasePredictor, Input, BaseModel
+from cog import BasePredictor, File, Input, BaseModel
 import torch
 from torchvision import datasets, transforms
 from torchvision.models import resnet18, ResNet
@@ -37,11 +37,11 @@ class Predictor(BasePredictor):
 
         return model
     
-    def predict(self, image_file: Image = Input(type=Image, help="Upload an image file.", default=None),
-                      image_url: str = Input(description="Enter an image URL.", default=None)) -> Output:
+    def predict(self, image_file: File = Input(description="Upload an image file. (optional)", default=None),
+                      image_url: str = Input(description="Enter an image URL. (optional)", default=None)) -> Output:
         """Run prediction on an image provided either as a file upload or via a URL."""
         if image_file is not None:
-            image = image_file
+            image = Image.open(image_file)
         elif image_url is not None:
             image = self.image_get(image_url)
         else:
