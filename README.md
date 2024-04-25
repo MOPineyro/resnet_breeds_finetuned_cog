@@ -29,7 +29,7 @@ To set up the project, you need to have Docker and [Cog](https://github.com/repl
 You can run the model using the Cog command. To classify an image, use the following command:
 
 ```bash
-cog predict -i image=<URL of image>
+cog predict -i image_url=<URL of image>
 ```
 
 Replace `<URL of image>` with the actual URL of the image you want to classify.
